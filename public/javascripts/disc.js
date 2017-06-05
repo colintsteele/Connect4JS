@@ -1,18 +1,25 @@
-function Disc(xCoord, yCoord) {
-    this.xCoord = xCoord;
-    this.yCoord = yCoord;
-    if(Disc.where({ xCoord: xCoord, yCoord: yCoord }) == null)
+function Disc(coordinates) {
+    this.xCoord = coordinates.xCoord;
+    this.yCoord = coordinates.yCoord;
+
+    var noDiscThere = (Disc.where({ xCoord: coordinates.xCoord, yCoord: coordinates.yCoord }) == null);
+    if(noDiscThere && (this.xCoord && this.yCoord))
         Disc.discs.push(this);
 }
 
-Disc.discs = [];
+Disc.clearDiscs = function() {
+    Disc.discs = [];
+}
+Disc.clearDiscs();
+
+
 Disc.where = function(coordinates) {
     var results = [];
 
     Disc.discs.forEach(function(disc) {
         var sameX = (disc.xCoord == coordinates.xCoord);
         var sameY = (disc.yCoord == coordinates.yCoord);
-
+        
         if(sameX && sameY) {
             results.push(disc);
             return results;
